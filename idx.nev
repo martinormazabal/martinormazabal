@@ -1,0 +1,3 @@
+FRONTEND=./frontend
+BACKEND=./backend
+DATABASE=./database

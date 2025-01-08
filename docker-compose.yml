@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: chatbotuser
+      POSTGRES_PASSWORD: cp1619comm2k1
+      POSTGRES_DB: chatbotdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    environment:
+      - DB_HOST=database
+      - DB_USER=chatbotuser
+      - DB_PASSWORD=cp1619comm2k1
+      - DB_NAME=chatbotdb
+    depends_on:
+      - database
+    ports:
+      - "3000:3000"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
